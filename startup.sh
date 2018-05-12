@@ -1,6 +1,6 @@
 
-#!bin/bash
-sudo yum update -y
-sudo yum install httpd -y
+#!/bin/bash
+yum update -y
+yum install httpd -y
 systemctl start httpd
-sudo yum install git -y
+yum install git -y
