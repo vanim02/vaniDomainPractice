@@ -33,7 +33,7 @@ then
 	lcState=$(aws autoscaling describe-launch-configurations --launch-configuration-name $lcName | grep ImageId)
 	while [ -z "$lcState" ]
 	do
-	echo "image status now is $lcState"
+	echo "launch configuration status now is $lcState"
 		sleep 30
 	done
 	
