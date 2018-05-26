@@ -2,7 +2,7 @@
 ## retrieve instance id
 instanceId=$(curl http://169.254.169.254/latest/meta-data/instance-id)
 ## compare with pilot instance
-if [ $instanceId != i-00da759bceeb2f24c ]
+if [ $instanceId != i-05ea9bde81ddb9bcc ]
 then
 			exit 0
 	else
@@ -13,7 +13,7 @@ then
 	cd /home/ec2-user/
 
 	echo "create image for the pilot instance"
-	latestami=$(aws ec2 create-image --instance-id i-00da759bceeb2f24c --name ap-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
+	latestami=$(aws ec2 create-image --instance-id i-05ea9bde81ddb9bcc --name ap-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
 
 	echo "ami created is $latestami"
 
@@ -40,11 +40,11 @@ then
 		
 	if [ -z "$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name adapaasg --output text)" ]
 	then
-		 echo "adapaasg does not exists"
+		 echo "adapaasg does not exists......creating"
 			aws autoscaling create-auto-scaling-group --auto-scaling-group-name adapaasg --launch-configuration-name $lcName --min-size 2 --max-size 4 --load-balancer-names adapalb --vpc-zone-identifier subnet-90c771da --vpc-zone-identifier subnet-85ff13ab --region us-east-1
 	else
 		  
-	echo "adapa asg exists"
+	echo "adapa asg exists......updating"
 			aws autoscaling update-auto-scaling-group --auto-scaling-group-name adapaasg --launch-configuration-name $lcName --min-size 0 --max-size 4 --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --termination-policies "OldestLaunchConfiguration"
 	echo "updating launch configuration"
 			
