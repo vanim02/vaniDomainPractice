@@ -11,6 +11,7 @@ then
 	sleep 30s
 
 	cd /home/ec2-user/
+	sudo cp /home/ec2-user/vaniDomainPractice/index.html	/var/www/html/index.html
 
 	echo "create image for the pilot instance"
 	latestami=$(aws ec2 create-image --instance-id i-0b6b289505e143392 --name ap-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
@@ -55,10 +56,10 @@ then
 			done
 	sleep 10					 
 echo "scale up in process..."	 
-aws autoscaling set-desired-capacity --auto-scaling-group-name adapaasg --desired-capacity 2
+aws autoscaling set-desired-capacity --auto-scaling-group-name adapaasg --desired-capacity 5
 	sleep 300
 echo "scale down in process..."
-	  aws autoscaling set-desired-capacity --auto-scaling-group-name adapaasg --desired-capacity 3	
+	  aws autoscaling set-desired-capacity --auto-scaling-group-name adapaasg --desired-capacity 2	
 fi
 		
 fi
