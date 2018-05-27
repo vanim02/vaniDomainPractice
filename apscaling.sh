@@ -46,7 +46,7 @@ then
 	else
 		  
 	echo "adapa asg exists......updating"
-			aws autoscaling update-auto-scaling-group --auto-scaling-group-name adapaasg --launch-configuration-name $lcName --min-size 0 --max-size 4 --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --region us-east-1 --termination-policies "OldestLaunchConfiguration"
+			aws autoscaling update-auto-scaling-group --auto-scaling-group-name adapaasg --launch-configuration-name $lcName --min-size 2 --max-size 5 --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --region us-east-1 --termination-policies "OldestInstance"
 	echo "updating launch configuration"
 			
 			while [ "$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name adapaasg --query 'AutoScalingGroups[].[LaunchConfigurationName]' --output text)" != "$lcName" ]
