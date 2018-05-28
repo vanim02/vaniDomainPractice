@@ -15,7 +15,7 @@ then
 	 sudo cp /home/ec2-user/vaniDomainPractice/index.html /var/www/html/
 
 	echo "create image for the pilot instance"
-	latestami=$(aws ec2 create-image --instance-id i-0d371ecf0e1b145dd --name vani-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
+	latestami=$(aws ec2 create-image --instance-id $instanceId --name vani-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
 
 	echo "ami created is $latestami"
 
@@ -44,6 +44,7 @@ then
 	then
 		 echo "vani asg does not exists"
 			aws autoscaling create-auto-scaling-group --auto-scaling-group-name vaniasg --launch-configuration-name $lcName --min-size 2 --max-size 4 --load-balancer-names vanilb --vpc-zone-identifier subnet-a5827ec2  --vpc-zone-identifier subnet-95b857bb --region us-east-1
+
 	else
 		  
 	echo "vani asg exists"
