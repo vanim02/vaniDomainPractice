@@ -42,11 +42,19 @@ then
 		
 	if [ -z "$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name vaniMutableAsg --region us-east-1 --output text)" ]
 	then
+<<<<<<< HEAD
 		 echo "vani asg does not exists"
 			aws autoscaling create-auto-scaling-group --auto-scaling-group-name vaniMutableAsg --launch-configuration-name $lcName --min-size 2 --max-size 4 --load-balancer-names mutable-lb --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --region us-east-1
 	else
 	
 	echo "vani asg exists"
+=======
+		 echo "mutable asg does not exists"
+			aws autoscaling create-auto-scaling-group --auto-scaling-group-name vaniMutableAsg --launch-configuration-name $lcName --min-size 2 --max-size 4 --load-balancer-names mutable-lb --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --region us-east-1
+	else
+	
+	echo "mutable asg exists"
+>>>>>>> d4de0e5054fff242ea199f6d56b72f4625c38fbb
 			aws autoscaling update-auto-scaling-group --auto-scaling-group-name vaniMutableAsg --launch-configuration-name $lcName --min-size 1 --max-size 4 --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --termination-policies "OldestLaunchConfiguration"  --region us-east-1
 	echo "updating launch configuration"
 			
