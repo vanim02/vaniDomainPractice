@@ -44,6 +44,7 @@ then
 	then
 		 echo "vani asg does not exists"
 			aws autoscaling create-auto-scaling-group --auto-scaling-group-name vaniasg --launch-configuration-name $lcName --min-size 2 --max-size 4 --load-balancer-names vanilb --vpc-zone-identifier subnet-a5827ec2  --vpc-zone-identifier subnet-95b857bb --region us-east-1
+
 	else
 		  
 	echo "vani asg exists"
