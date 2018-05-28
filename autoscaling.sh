@@ -7,15 +7,15 @@ then
 			exit 0
 	else
 	##git pull from origin
-	cd /home/ec2-user/vaniDomainPractice 
-	 sudo git pull origin master
-	sleep 30s
+	#cd /home/ec2-user/vaniDomainPractice 
+	 #sudo git pull origin master
+	#sleep 30s
 
 	
-	 sudo cp /home/ec2-user/vaniDomainPractice/index.html /var/www/html/
+	 #sudo cp /home/ec2-user/vaniDomainPractice/index.html /var/www/html/
 
 	echo "create image for the pilot instance"
-	latestami=$(aws ec2 create-image --instance-id i-0d371ecf0e1b145dd --name vani-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
+	latestami=$(aws ec2 create-image --instance-id $instanceId --name vani-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
 
 	echo "ami created is $latestami"
 
