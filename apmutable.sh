@@ -15,7 +15,7 @@ then
 	 sudo cp /home/ec2-user/vaniDomainPractice/index.html /var/www/html/
 
 	echo "create image for the pilot instance"
-	latestami=$(aws ec2 create-image --instance-id $instanceId --name vani-mutable-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
+	latestami=$(aws ec2 create-image --instance-id $instanceId --name mutable-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
 
 	echo "ami created is $latestami"
 
@@ -27,7 +27,7 @@ then
 	imageState="$(aws ec2 describe-images --image-id $latestami --query 'Images[].[State]' --owners self --region us-east-1 --output text)"
 	done
 		
-		lcName=$(echo vaniMutableLc$(date -u +\%Y\%m\%dT\%H\%M\%S))
+		lcName=$(echo MutableLc$(date -u +\%Y\%m\%dT\%H\%M\%S))
 		echo "launch config in process"
 		aws autoscaling create-launch-configuration --launch-configuration-name $lcName  --image-id $latestami --instance-type t2.micro --region us-east-1
 	
@@ -40,41 +40,28 @@ then
 	done
 	
 		
-	if [ -z "$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name vaniMutableAsg --region us-east-1 --output text)" ]
+	if [ -z "$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name mutableasg --region us-east-1 --output text)" ]
 	then
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 61fff84b39d9430e53149a339e3891f7dd4c208e
-		 echo "vani asg does not exists"
-			aws autoscaling create-auto-scaling-group --auto-scaling-group-name vaniMutableAsg --launch-configuration-name $lcName --min-size 2 --max-size 4 --load-balancer-names mutable-lb --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --region us-east-1
-	else
-	
-	echo "vani asg exists"
-<<<<<<< HEAD
-=======
-=======
 		 echo "mutable asg does not exists"
-			aws autoscaling create-auto-scaling-group --auto-scaling-group-name vaniMutableAsg --launch-configuration-name $lcName --min-size 2 --max-size 4 --load-balancer-names mutable-lb --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --region us-east-1
+			aws autoscaling create-auto-scaling-group --auto-scaling-group-name mutableasg --launch-configuration-name $lcName --min-size 2 --max-size 4 --load-balancer-names mutable-lb --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --region us-east-1
+
 	else
 	
 	echo "mutable asg exists"
->>>>>>> d4de0e5054fff242ea199f6d56b72f4625c38fbb
->>>>>>> 61fff84b39d9430e53149a339e3891f7dd4c208e
-			aws autoscaling update-auto-scaling-group --auto-scaling-group-name vaniMutableAsg --launch-configuration-name $lcName --min-size 1 --max-size 4 --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --termination-policies "OldestLaunchConfiguration"  --region us-east-1
+			aws autoscaling update-auto-scaling-group --auto-scaling-group-name mutableasg --launch-configuration-name $lcName --min-size 1 --max-size 4 --vpc-zone-identifier subnet-85ff13ab --vpc-zone-identifier subnet-90c771da --termination-policies "OldestLaunchConfiguration"  --region us-east-1
 	echo "updating launch configuration"
 			
-			while [ "$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name vaniMutableAsg  --region us-east-1 --query 'AutoScalingGroups[].[LaunchConfigurationName]' --output text)" != "$lcName" ]
+			while [ "$(aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name mutableasg  --region us-east-1 --query 'AutoScalingGroups[].[LaunchConfigurationName]' --output text)" != "$lcName" ]
 			do
 				echo "LC not updated yet"
 				sleep 30
 			done
 	sleep 10					 
 echo "scale up in process..."	 
-aws autoscaling set-desired-capacity --auto-scaling-group-name vaniMutableAsg  --region us-east-1 --desired-capacity 4
-	sleep 10
+aws autoscaling set-desired-capacity --auto-scaling-group-name mutableasg  --region us-east-1 --desired-capacity 4
+	sleep 45
 echo "scale down in process..."
-	  aws autoscaling set-desired-capacity --auto-scaling-group-name vaniMutableAsg  --region us-east-1 --desired-capacity 2	
+	  aws autoscaling set-desired-capacity --auto-scaling-group-name mutableasg  --region us-east-1 --desired-capacity 2	
 fi
 		
 fi
