@@ -6,13 +6,13 @@ if [ $instanceId != i-0b46d5e092817eb1b ]
 then
 			exit 0
 	else
-	##git pull from origin
-	#cd /home/ec2-user/vaniDomainPractice 
-	 #sudo git pull origin master
-	#sleep 30s
+	#git pull from origin
+	cd /home/ec2-user/vaniDomainPractice 
+	sudo git pull origin master
+	sleep 30s
 
 	
-	 #sudo cp /home/ec2-user/vaniDomainPractice/index.html /var/www/html/
+	sudo cp /home/ec2-user/vaniDomainPractice/index.html /var/www/html/
 
 	echo "create image for the pilot instance"
 	latestami=$(aws ec2 create-image --instance-id $instanceId --name vani-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
@@ -56,10 +56,10 @@ then
 				echo "LC not updated yet"
 				sleep 30
 			done
-	sleep 10					 
+	sleep 30					 
 echo "scale up in process..."	 
 aws autoscaling set-desired-capacity --auto-scaling-group-name vaniasg  --region us-east-1 --desired-capacity 4
-	sleep 10
+	sleep 30
 echo "scale down in process..."
 	  aws autoscaling set-desired-capacity --auto-scaling-group-name vaniasg  --region us-east-1 --desired-capacity 2	
 fi
