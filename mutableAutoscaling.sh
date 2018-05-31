@@ -29,7 +29,7 @@ then
 		
 		lcName=$(echo vaniMutableLc$(date -u +\%Y\%m\%dT\%H\%M\%S))
 		echo "launch config in process"
-		aws autoscaling create-launch-configuration --launch-configuration-name $lcName  --image-id $latestami --instance-type t2.micro --region us-east-1
+		aws autoscaling create-launch-configuration --launch-configuration-name $lcName  --image-id $latestami --instance-type t2.micro --region us-east-1 --associate-public-ip-address 
 	
 	
 	lcState=$(aws autoscaling describe-launch-configurations --launch-configuration-name $lcName  --region us-east-1| grep ImageId)
@@ -55,10 +55,10 @@ then
 				echo "LC not updated yet"
 				sleep 30
 			done
-	sleep 10					 
+	sleep 20					 
 echo "scale up in process..."	 
 aws autoscaling set-desired-capacity --auto-scaling-group-name vaniMutableAsg  --region us-east-1 --desired-capacity 4
-	sleep 10
+	sleep 20
 echo "scale down in process..."
 	  aws autoscaling set-desired-capacity --auto-scaling-group-name vaniMutableAsg  --region us-east-1 --desired-capacity 2	
 fi

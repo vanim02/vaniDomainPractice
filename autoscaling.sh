@@ -29,7 +29,7 @@ then
 		
 		lcName=$(echo vanilc$(date -u +\%Y\%m\%dT\%H\%M\%S))
 		echo "launch config in process"
-		aws autoscaling create-launch-configuration --launch-configuration-name $lcName  --image-id $latestami --instance-type t2.micro --region us-east-1
+		aws autoscaling create-launch-configuration --launch-configuration-name $lcName  --image-id $latestami --instance-type t2.micro --region us-east-1 --associate-public-ip-address 
 	
 	
 	lcState=$(aws autoscaling describe-launch-configurations --launch-configuration-name $lcName  --region us-east-1| grep ImageId)
