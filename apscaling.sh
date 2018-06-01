@@ -12,6 +12,8 @@ then
 
 	cd /home/ec2-user/
 	sudo cp /home/ec2-user/vaniDomainPractice/index.html	/var/www/html/index.html
+        echo "Copied the new version"
+	sleep 30s
 
 	echo "create image for the pilot instance"
 	latestami=$(aws ec2 create-image --instance-id i-0f9b03c0442102d8b --name ap-img-$(date -u +\%Y\%m\%dT\%H\%M\%S) --region us-east-1 --output text --no-reboot)
